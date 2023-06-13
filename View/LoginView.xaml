@@ -16,7 +16,7 @@
 
     <Border CornerRadius="50">
         <Border.Background>
-            <ImageBrush ImageSource="C:\Users\lava19\source\repos\usb\Images\5.jpg"
+            <ImageBrush ImageSource="C:\Users\lava19\Source\Repos\ezzatynordin\usb\Images\5.jpg"
                         Stretch="None"/>
         </Border.Background>
 
@@ -33,12 +33,16 @@
             </Border.BorderBrush>
 
             <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="287*"/>
+                    <ColumnDefinition Width="108*"/>
+                </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
 
-                <Grid Margin="0,0,-11,391" Grid.RowSpan="2">
+                <Grid Margin="0,0,-11,391" Grid.RowSpan="2" Grid.ColumnSpan="2">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition Width="25"/>
@@ -125,9 +129,9 @@
                 <StackPanel Width="250"
                             Grid.Row="1"
                             Orientation="Vertical"
-                            Margin="270,84,270,10">
+                            Margin="270,84,54,10">
 
-                    <Image Source="C:\Users\lava19\source\repos\usb\Images\11.png"
+                    <Image Source="C:\Users\lava19\Source\Repos\ezzatynordin\usb\Images\11.png"
                         Width="100" Height="100"/>
 
                     <TextBlock Text="USB Blocker"
