@@ -20,8 +20,8 @@
         </Border.Background>
 
         <Border CornerRadius="40"
-            BorderThickness="5"
-            Opacity="1.50">
+                BorderThickness="5"
+                Opacity="1.50">
 
             <Border.BorderBrush>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
@@ -32,7 +32,12 @@
             </Border.BorderBrush>
 
             <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="250"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
+                <!-- Menu -->
                 <Grid x:Name="GridMenu" Width="250" HorizontalAlignment="Left">
                     <Border CornerRadius="40,0,0,40"
                             BorderThickness="5"
@@ -41,7 +46,7 @@
                         <StackPanel>
                             <Image Height="100" Width="100" Margin="0,20,0,20" Source="C:\Users\lava19\Source\Repos\ezzatynordin\usb\Images\11.png"/>
                             <ListView Foreground="Black" FontFamily="Arial Rounded MT Bold">
-                                <ListViewItem Height="45" Padding="0">
+                                <ListViewItem Height="45" Padding="0" MouseLeftButtonUp="ListViewItem_MouseLeftButtonUp">
                                     <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
                                         <materialDesign:PackIcon Kind="ListStatus" Width="20" Height="20" Margin="0,0,10,0" VerticalAlignment="Center"/>
                                         <TextBlock Text="USB List" TextAlignment="Center" FontSize="18"/>
@@ -49,7 +54,7 @@
                                 </ListViewItem>
                             </ListView>
                             <ListView Foreground="Black" FontFamily="Arial Rounded MT Bold">
-                                <ListViewItem Height="45" Padding="0">
+                                <ListViewItem Height="45" Padding="0" MouseLeftButtonUp="ListViewItem1_MouseLeftButtonUp">
                                     <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
                                         <materialDesign:PackIcon Kind="BookAccount" Width="20" Height="20" Margin="0,0,10,0" VerticalAlignment="Center"/>
                                         <TextBlock Text="Activity Log" TextAlignment="Center" FontSize="18"/>
@@ -59,6 +64,10 @@
                         </StackPanel>
                     </Border>
                 </Grid>
+
+                <!-- Content Area -->
+                <Frame Grid.Column="1" x:Name="ContentFrame" NavigationUIVisibility="Hidden"/>
+
             </Grid>
         </Border>
     </Border>

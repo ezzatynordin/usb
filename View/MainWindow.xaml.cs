@@ -31,19 +31,16 @@ namespace usb.View
                 DragMove();
         }
 
-        private void btnMinimize_Click(object sender, RoutedEventArgs e)
+        private void ListViewItem_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            WindowState = WindowState.Minimized;
+            // Navigate to the USB List page
+            ContentFrame.Navigate(new USBList());
+ 
         }
-
-        private void btnMaximize_Click(object sender, RoutedEventArgs e)
+        private void ListViewItem1_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            WindowState = WindowState.Maximized;
-        }
-
-        private void btnClose_Click(object sender, RoutedEventArgs e)
-        {
-            Application.Current.Shutdown();
+            // Navigate to the USB List page
+            ContentFrame.Navigate(new ActivityLog());
         }
 
     }
