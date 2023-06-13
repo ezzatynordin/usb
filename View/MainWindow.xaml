@@ -57,7 +57,7 @@
                                 <ListViewItem Height="45" Padding="0" MouseLeftButtonUp="ListViewItem1_MouseLeftButtonUp">
                                     <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
                                         <materialDesign:PackIcon Kind="BookAccount" Width="20" Height="20" Margin="0,0,10,0" VerticalAlignment="Center"/>
-                                        <TextBlock Text="Activity Log" TextAlignment="Center" FontSize="18"/>
+                                        <TextBlock Text="Activity Loeg" TextAlignment="Center" FontSize="18"/>
                                     </StackPanel>
                                 </ListViewItem>
                             </ListView>
