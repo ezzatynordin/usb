@@ -4,6 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:usb.View"
+		xmlns:viewModel="clr-namespace:usb.ViewModel"
+        xmlns:customcontrol="clr-namespace:usb.CustomControl"
         mc:Ignorable="d"
         Title="LoginView" Height="500" Width="800"
         WindowStyle="None"
@@ -14,6 +16,18 @@
         MouseDown="Window_MouseDown">
 
 
+	<Window.DataContext>
+		<viewModel:LoginViewModel/>
+	</Window.DataContext>
+
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>
+    </Window.Resources>
+
+    <Window.Visibility>
+        <Binding Path="IsViewVisible" Mode="TwoWay" Converter="{StaticResource BooleanToVisibility}"/>
+    </Window.Visibility>
+	
     <Border CornerRadius="50">
         <Border.Background>
             <ImageBrush ImageSource="C:\Users\lava19\Source\Repos\ezzatynordin\usb\Images\5.jpg"
@@ -149,6 +163,7 @@
                                Margin="0,35,0,0"/>
 
                     <TextBox x:Name="txtUser"
+                             Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"
                              FontSize="14"
                              FontWeight="Light"
                              FontFamily="Arial Rounded MT Bold"
@@ -167,24 +182,23 @@
                                FontSize="14"
                                FontWeight="Medium"
                                FontFamily="Arial Rounded MT Bold"
-                               Margin="0,20,0,0">
+                               Margin="0,20,0,0"/>
 
-                    </TextBlock>
+                    <customcontrol:BindablePasswordBox Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                    Height="20"                            
+                                                    Margin="0,10,0,15" RenderTransformOrigin="0.544,-0.216">
+                    </customcontrol:BindablePasswordBox>
 
-                    <PasswordBox x:Name="txtPass"
-                             FontSize="14"
-                             FontWeight="Light"
-                             FontFamily="Arial"
-                             Background="White"  
-                             Foreground="Black"
-                             CaretBrush="Black"
-                             BorderBrush="red"
-                             BorderThickness="0,0,0,2"
-                             Height="20"
-                             VerticalContentAlignment="Center"
-                             Margin="0,10,0,15">
-                    </PasswordBox>
+                    <TextBlock Text="{Binding ErrorMessage}"
+                               Foreground="White"
+                               FontSize="14"
+                               FontWeight="Medium"
+                               FontFamily="Arial Rounded MT Bold"
+                               Margin="0,10,0,0"
+                               TextWrapping="Wrap"/>
+
                     <Button x:Name="btnLogin"
+                            Command="{Binding LoginCommand}"
                             Background="White"
                             BorderThickness="0"
                             Content="Login"
@@ -192,7 +206,6 @@
                             FontSize="14"
                             FontFamily="Arial Rounded MT Bold"
                             Cursor="Hand"
-                            Click="btnLogin_Click"
                             Width="60" Height="35">
                         <Button.Style>
                             <Style TargetType="{x:Type Button}">

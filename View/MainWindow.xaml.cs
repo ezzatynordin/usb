@@ -43,5 +43,9 @@ namespace usb.View
             ContentFrame.Navigate(new ActivityLog());
         }
 
+        private void ContentFrame_Navigated(object sender, NavigationEventArgs e)
+        {
+
+        }
     }
 }
