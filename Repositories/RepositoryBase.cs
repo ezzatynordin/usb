@@ -13,8 +13,8 @@ namespace usb.Repositories
         private readonly string _connectionString;
         public RepositoryBase()
         {
-           //connectionString = "Server=(local); Database=MVVMLoginDb; Integrated Security=true";
-            _connectionString = "Server=F1-LAPTOP-MPC\\SQLEXPRESS; Database=USB; Integrated Security=true";
+            //connectionString = "Server=(local); Database=MVVMLoginDb; Integrated Security=true";
+            _connectionString = "Server=F1-LAPTOP-MPC\\SQLEXPRESS; Database=USB; Integrated Security=; Trusted_Connection=true; TrustServerCertificate=true";
         }
         protected SqlConnection GetConnection()
         {

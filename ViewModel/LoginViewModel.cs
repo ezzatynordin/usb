@@ -5,17 +5,23 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Security;
 using System.Windows.Input;
-
+using usb.Model;
+using usb.Repositories;
+using System.Security.Principal;
+using System.Threading;
+using System.Net;
 
 namespace usb.ViewModel
 {
     public class LoginViewModel : ViewModelBase
     {
         //Field
-        private string _username = "Username";
+        private string _username;
         private SecureString _password;
         private string _errorMessage;
         private bool _isViewVisible = true;
+
+        private IUserRepository userRepository;
 
         //Properties
         public string Username
@@ -81,6 +87,7 @@ namespace usb.ViewModel
         //constructor
         public LoginViewModel()
         {
+            userRepository = new UserRepository();  
             LoginCommand = new ViewModelCommand(ExecuteLoginCommand, CanExecuteLoginCommand);
             RecoverPasswordCommand = new ViewModelCommand(p=>ExecuteRecoverPassCommand("",""));
         }
@@ -97,7 +104,17 @@ namespace usb.ViewModel
         }
         private void ExecuteLoginCommand(object obj)
         {
-         
+            var isValidUser = userRepository.AuthenticateUser(new NetworkCredential(Username, Password));
+            if (isValidUser)
+            {
+                Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(Username), null);
+                IsViewVisible = false;
+            }
+
+            else
+            {
+                ErrorMessage = "* Invalid username or password";
+            }
         }
 
         private void ExecuteRecoverPassCommand(string username, string email)
