@@ -1,0 +1,19 @@
+﻿<Page x:Class="usb.View.UsbDetect"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:usb.View"
+        mc:Ignorable="d"
+        Title="UsbDetect" Height="450" Width="800">
+    <Grid>
+        <ListView ItemsSource="{Binding DeviceList}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Property" DisplayMemberBinding="{Binding Header}" Width="120"/>
+                    <GridViewColumn Header="Value" DisplayMemberBinding="{Binding Value}" Width="Auto"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</Page>

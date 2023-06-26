@@ -62,7 +62,7 @@
                                     </StackPanel>
                                 </ListViewItem>
                             </ListView>
-                            <ListView Foreground="Black" FontFamily="Arial Rounded MT Bold">
+                           <ListView Foreground="Black" FontFamily="Arial Rounded MT Bold">
                                 <ListViewItem Height="45" Padding="0" MouseLeftButtonUp="ListViewItem2_MouseLeftButtonUp">
                                     <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
                                         <materialDesign:PackIcon Kind="SearchAdd" Width="20" Height="20" Margin="0,0,10,0" VerticalAlignment="Center"/>
@@ -75,7 +75,7 @@
                 </Grid>
 
                 <!-- Content Area -->
-                <Frame Grid.Column="1" x:Name="ContentFrame" NavigationUIVisibility="Hidden" Margin="20,63,27,0"/>
+                <Frame Grid.Column="1" x:Name="ContentFrame" NavigationUIVisibility="Hidden" Margin="20,63,27,78"/>
                 <Button Grid.Column="1" Content="x" HorizontalAlignment="Left" Margin="996,10,0,0" VerticalAlignment="Top" Click="CloseButton_Click" Height="30" Width="34" FontWeight="Bold" FontSize="18"/>
                 <Button Grid.Column="1" Content="-" HorizontalAlignment="Left" Height="30" Margin="957,10,0,0" VerticalAlignment="Top" Width="34" Click="MinimizeButton_Click" FontSize="18" FontWeight="Bold"/>
 

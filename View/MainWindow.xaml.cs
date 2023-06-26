@@ -34,32 +34,38 @@ namespace usb.View
         private void ListViewItem_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             // Navigate to the USB List page
-            ContentFrame.Navigate(new USBList());
+            ContentFrame.Navigate(new UsbList());
         }
 
         private void ListViewItem1_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             // Navigate to the Activity Log page
-            ContentFrame.Navigate(new ActivityLog());
+            //ContentFrame.Navigate(new ActivityLog());
         }
-
         private void ListViewItem2_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            // Display a message box and handle the user's response
-            var result = MessageBox.Show("Please plug in the USB to detect.", "USB Detection", MessageBoxButton.OKCancel);
+        // Display a message box and handle the user's response
+        var result = MessageBox.Show("Please plug in the USB to detect.", "USB Detection", MessageBoxButton.OKCancel);
 
-            if (result == MessageBoxResult.OK)
-            {
+        if (result == MessageBoxResult.OK)
+        {
                 // User clicked OK, proceed with the USB detection
-                ContentFrame.Navigate(new DetectNewUSB());
+                //ContentFrame.Navigate(new usb.View.UsbDetect());
+                ContentFrame.Navigate(new UsbDetect());
+                // Create an instance of the USBDetect window from "Project 2"
+                //var usbDetectWindow = new usb.UsbDetect();
+
+                // Show the USBDetect window from "Project 2"
+                //usbDetectWindow.Show();
             }
-            else
-            {
-                // User clicked Cancel or closed the message box, stop the activity
-                // Add code here to handle the activity stoppage
-                StopActivity();
-            }
+         else
+        {
+        // User clicked Cancel or closed the message box, stop the activity
+        // Add code here to handle the activity stoppage
+          StopActivity();
         }
+        }
+
 
         private void StopActivity()
         {
@@ -89,5 +95,6 @@ namespace usb.View
         {
 
         }
+
     }
 }

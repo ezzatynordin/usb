@@ -15,6 +15,7 @@
     <PackageReference Include="MaterialDesignThemes" Version="4.9.0" />
     <PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.1" />
     <PackageReference Include="System.Management" Version="7.0.2" />
+    <PackageReference Include="System.ObjectModel" Version="4.3.0" />
   </ItemGroup>
 
 </Project>
