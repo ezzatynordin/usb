@@ -185,8 +185,8 @@
                                Margin="0,20,0,0"/>
 
                     <customcontrol:BindablePasswordBox Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                    Height="20"                            
-                                                    Margin="0,10,0,15" RenderTransformOrigin="0.544,-0.216">
+                                                       Height="20"
+                                                       Margin="0,10,0,15" RenderTransformOrigin="0.544,-0.216">
                     </customcontrol:BindablePasswordBox>
 
                     <TextBlock Text="{Binding ErrorMessage}"

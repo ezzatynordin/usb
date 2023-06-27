@@ -15,5 +15,9 @@
                 </GridView>
             </ListView.View>
         </ListView>
+
+        <Button Content="Add To Usb List" Click="AddButton_Click" HorizontalAlignment="Center" Margin="0,478,0,-61" Width="140"/>
+
     </Grid>
 </Page>
+

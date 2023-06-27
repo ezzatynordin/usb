@@ -41,7 +41,7 @@ namespace usb.View
             InitializeComponent();
 
             // Initialize the product data
-
+            Products = new ObservableCollection<Product>();
             // Set the data context
             DataContext = this;
         }

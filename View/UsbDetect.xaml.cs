@@ -34,6 +34,13 @@ namespace usb.View
         {
             viewModel.LoadDevices();
         }
+        private void AddButton_Click(object sender, RoutedEventArgs e)
+        {
+         //collect data table detect new usb tu
+         //amik data table tu and masukkan ke dalam table yg usb list
+        }
+
+
     }
 
     public class DeviceViewModel : INotifyPropertyChanged
@@ -99,4 +106,5 @@ namespace usb.View
             Value = value;
         }
     }
+
 }
