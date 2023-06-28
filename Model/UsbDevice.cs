@@ -8,8 +8,12 @@ namespace usb.Model
 {
     public class UsbDevice
     {
-        public string DeviceID { get; set; }
-        public string Description { get; set; }
+        public int Id { get; set; } // Primary key
+        public string Name { get; set; }
         public string Manufacturer { get; set; }
+        public string Description { get; set; }
+        public string Service { get; set; }
+        public string Caption { get; set; }
+        public string PNPDeviceID { get; set; }
     }
 }

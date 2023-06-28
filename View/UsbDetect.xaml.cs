@@ -14,6 +14,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using usb.Data;
+using usb.Model;
 
 namespace usb.View
 {
@@ -34,77 +36,101 @@ namespace usb.View
         {
             viewModel.LoadDevices();
         }
+
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-         //collect data table detect new usb tu
-         //amik data table tu and masukkan ke dalam table yg usb list
-        }
-
-
-    }
-
-    public class DeviceViewModel : INotifyPropertyChanged
-    {
-        private ObservableCollection<DeviceProperty> deviceList;
-
-        public ObservableCollection<DeviceProperty> DeviceList
-        {
-            get { return deviceList; }
-            set
-            {
-                deviceList = value;
-                OnPropertyChanged(nameof(DeviceList));
-            }
-        }
-
-        public void LoadDevices()
-        {
-            List<DeviceProperty> properties = GetConnectedPendriveProperties();
-            DeviceList = new ObservableCollection<DeviceProperty>(properties);
-        }
-
-        private List<DeviceProperty> GetConnectedPendriveProperties()
-        {
-            List<DeviceProperty> properties = new List<DeviceProperty>();
-
-            try
+            using (var dbContext = new UsbDbContext())
             {
                 ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT * FROM Win32_PnPEntity WHERE Status='OK' AND Caption='USB Mass Storage Device'");
 
                 foreach (ManagementObject obj in searcher.Get())
                 {
-                    foreach (PropertyData property in obj.Properties)
+                    var usbDevice = new UsbDevice
                     {
-                        properties.Add(new DeviceProperty(property.Name, property.Value?.ToString()));
-                    }
+                        Name = obj["Name"]?.ToString(),
+                        Manufacturer = obj["Manufacturer"]?.ToString(),
+                        Description = obj["Description"]?.ToString(),
+                        Service = obj["Service"]?.ToString(),
+                        Caption = obj["Caption"]?.ToString(),
+                        PNPDeviceID = obj["PNPDeviceID"]?.ToString()
+                    };
+
+                    dbContext.UsbDevices.Add(usbDevice);
+                }
+
+                dbContext.SaveChanges();
+                // Add the USB device to the collection
+                
+            }
+        }
+    }
+        }
+
+
+        // Rest of the code remains the same...
+
+
+
+        public class DeviceViewModel : INotifyPropertyChanged
+        {
+            private ObservableCollection<DeviceProperty> deviceList;
+
+            public ObservableCollection<DeviceProperty> DeviceList
+            {
+                get { return deviceList; }
+                set
+                {
+                    deviceList = value;
+                    OnPropertyChanged(nameof(DeviceList));
                 }
             }
-            catch (ManagementException e)
+
+            public void LoadDevices()
             {
-                MessageBox.Show($"An error occurred while querying devices: {e.Message}");
+                List<DeviceProperty> properties = GetConnectedPendriveProperties();
+                DeviceList = new ObservableCollection<DeviceProperty>(properties);
             }
 
-            return properties;
+            private List<DeviceProperty> GetConnectedPendriveProperties()
+            {
+                List<DeviceProperty> properties = new List<DeviceProperty>();
+
+                try
+                {
+                    ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT * FROM Win32_PnPEntity WHERE Status='OK' AND Caption='USB Mass Storage Device'");
+
+                    foreach (ManagementObject obj in searcher.Get())
+                    {
+                        foreach (PropertyData property in obj.Properties)
+                        {
+                            properties.Add(new DeviceProperty(property.Name, property.Value?.ToString()));
+                        }
+                    }
+                }
+                catch (ManagementException e)
+                {
+                    MessageBox.Show($"An error occurred while querying devices: {e.Message}");
+                }
+
+                return properties;
+            }
+
+            public event PropertyChangedEventHandler PropertyChanged;
+
+            protected virtual void OnPropertyChanged(string propertyName)
+            {
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+public class DeviceProperty
+{
+    public string Header { get; }
+    public string Value { get; }
 
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-    }
-
-    public class DeviceProperty
+    public DeviceProperty(string header, string value)
     {
-        public string Header { get; }
-        public string Value { get; }
-
-        public DeviceProperty(string header, string value)
-        {
-            Header = header;
-            Value = value;
-        }
+        Header = header;
+        Value = value;
     }
-
 }

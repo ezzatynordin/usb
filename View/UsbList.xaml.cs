@@ -1,38 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using usb.Data;
+using usb.Model;
 
 namespace usb.View
 {
-    /// <summary>
-    /// Interaction logic for UsbList.xaml
-    /// </summary>
     public partial class UsbList : Page, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private ObservableCollection<Product> products;
+        private ObservableCollection<UsbDevice> usbDevices;
 
-        public ObservableCollection<Product> Products
+        public ObservableCollection<UsbDevice> UsbDevices
         {
-            get { return products; }
+            get { return usbDevices; }
             set
             {
-                products = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Products)));
+                usbDevices = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(UsbDevices)));
             }
         }
 
@@ -40,10 +28,18 @@ namespace usb.View
         {
             InitializeComponent();
 
-            // Initialize the product data
-            Products = new ObservableCollection<Product>();
+            // Load USB devices from the database
+            LoadUsbDevices();
             // Set the data context
             DataContext = this;
+        }
+
+        private void LoadUsbDevices()
+        {
+            using (var dbContext = new UsbDbContext())
+            {
+                UsbDevices = new ObservableCollection<UsbDevice>(dbContext.UsbDevices.ToList());
+            }
         }
 
         private void EditButton_Click(object sender, RoutedEventArgs e)
@@ -60,31 +56,28 @@ namespace usb.View
         {
             string searchTerm = SearchTextBox.Text;
 
-            // Filter the products based on the search term
-            Products = new ObservableCollection<Product>(
-                Products.Where(p =>
-                    p.Name.Contains(searchTerm) ||
-                    p.Manufacturer.Contains(searchTerm) ||
-                    p.Description.Contains(searchTerm)
+            // Filter the USB devices based on the search term
+            UsbDevices = new ObservableCollection<UsbDevice>(
+                UsbDevices.Where(d =>
+                    d.Name.Contains(searchTerm) ||
+                    d.Manufacturer.Contains(searchTerm) ||
+                    d.Description.Contains(searchTerm) ||
+                    d.Service.Contains(searchTerm) ||
+                    d.Caption.Contains(searchTerm) ||
+                    d.PNPDeviceID.Contains(searchTerm)
                 ).ToList()
             );
         }
 
-        private void UsbListGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+private void ProductGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            // Get the selected item from the data grid
+            UsbDevice selectedDevice = ProductGrid.SelectedItem as UsbDevice;
+            if (selectedDevice != null)
+            {
+                // Perform any necessary logic with the selected item
+                MessageBox.Show($"Selected device: {selectedDevice.Name}");
+            }
         }
-
-        private void ProductGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-    }
-
-    public class Product
-    {
-        public string Name { get; set; }
-        public string Manufacturer { get; set; }
-        public string Description { get; set; }
     }
 }

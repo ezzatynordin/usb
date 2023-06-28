@@ -17,11 +17,15 @@
         </StackPanel>
 
         <DataGrid Grid.Row="2" x:Name="ProductGrid" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10"
-                  ItemsSource="{Binding Products}" SelectionChanged="ProductGrid_SelectionChanged">
+          ItemsSource="{Binding UsbDevices}" SelectionChanged="ProductGrid_SelectionChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
                 <DataGridTextColumn Header="Manufacturer" Binding="{Binding Manufacturer}" />
                 <DataGridTextColumn Header="Description" Binding="{Binding Description}" />
+                <DataGridTextColumn Header="Service" Binding="{Binding Service}" />
+                <DataGridTextColumn Header="Caption" Binding="{Binding Caption}" />
+                <DataGridTextColumn Header="PNPDeviceID" Binding="{Binding PNPDeviceID}" />
+                <!-- Add more columns here -->
                 <DataGridTemplateColumn Header="Actions">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -34,6 +38,7 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
+
     </Grid>
 </Page>
 

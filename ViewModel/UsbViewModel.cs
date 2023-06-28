@@ -34,21 +34,26 @@ namespace usb.ViewModel
             ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT * FROM Win32_USBControllerDevice");
             foreach (ManagementObject usbDevice in searcher.Get())
             {
-                string deviceId = usbDevice.GetPropertyValue("Dependent").ToString();
-                deviceId = deviceId.Substring(deviceId.IndexOf("\"") + 1, deviceId.LastIndexOf("\"") - deviceId.IndexOf("\"") - 1);
+                string dependent = usbDevice.GetPropertyValue("Dependent").ToString();
+                string deviceId = dependent.Substring(dependent.IndexOf("\"") + 1, dependent.LastIndexOf("\"") - dependent.IndexOf("\"") - 1);
 
                 ManagementObjectSearcher deviceSearcher = new ManagementObjectSearcher("SELECT * FROM Win32_PnPEntity WHERE DeviceID = '" + deviceId + "'");
                 foreach (ManagementObject device in deviceSearcher.Get())
                 {
                     UsbDevices.Add(new UsbDevice
                     {
-                        DeviceID = device.GetPropertyValue("DeviceID").ToString(),
+                        Id = Convert.ToInt32(device.GetPropertyValue("Id")),
+                        Name = device.GetPropertyValue("Name").ToString(),
+                        Manufacturer = device.GetPropertyValue("Manufacturer").ToString(),
                         Description = device.GetPropertyValue("Description").ToString(),
-                        Manufacturer = device.GetPropertyValue("Manufacturer").ToString()
+                        Service = device.GetPropertyValue("Service").ToString(),
+                        Caption = device.GetPropertyValue("Caption").ToString(),
+                        PNPDeviceID = device.GetPropertyValue("PNPDeviceID").ToString()
                     });
                 }
             }
         }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName)
