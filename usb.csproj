@@ -17,6 +17,7 @@
     <PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.1" />
     <PackageReference Include="System.Management" Version="7.0.2" />
     <PackageReference Include="System.ObjectModel" Version="4.3.0" />
+    <PackageReference Include="System.Windows.Interactivity.WPF" Version="2.0.20525" />
   </ItemGroup>
 
 </Project>

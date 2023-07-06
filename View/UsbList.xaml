@@ -1,44 +1,50 @@
 ﻿<Page x:Class="usb.View.UsbList"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      Title="USB List" Height="450" Width="800">
-    <Grid>
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      Title="USB List" Height="450" Width="800" >
+    <Grid Background="#F5F5F5" Margin="-75,-56,-75,-75">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <TextBlock Text="USB List" FontSize="24" HorizontalAlignment="Center" Margin="0,10" FontFamily="Arial Rounded MT Bold" />
+        <TextBlock Text="USB List" FontSize="32" HorizontalAlignment="Center" Margin="0,20" FontFamily="Arial Rounded MT Bold" />
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
-            <TextBox x:Name="SearchTextBox" Width="200" Margin="5" />
-            <Button Content="Search" Margin="5" Click="SearchButton_Click" />
+            <TextBox x:Name="SearchTextBox" Width="200" Margin="5" FontSize="14" BorderBrush="#CCCCCC" BorderThickness="1" />
+            <Button Content="Search" Margin="5" Click="SearchButton_Click" Height="30" Width="80" FontFamily="Arial Rounded MT Bold" Foreground="White" FontSize="14" Background="#FF424242" BorderBrush="#FF424242"/>
         </StackPanel>
 
-        <DataGrid Grid.Row="2" x:Name="ProductGrid" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10"
-          ItemsSource="{Binding UsbDevices}" SelectionChanged="ProductGrid_SelectionChanged">
+        <DataGrid Grid.Row="2" x:Name="ProductGrid" AutoGenerateColumns="False" CanUserAddRows="False" Margin="22,10,23,24"
+                  ItemsSource="{Binding UsbDevices}"
+                  BorderBrush="#CCCCCC" BorderThickness="1" Background="White" AlternatingRowBackground="#F5F5F5"
+                  RowHeaderWidth="0" HorizontalGridLinesBrush="#CCCCCC" VerticalGridLinesBrush="#CCCCCC">
+            <DataGrid.Resources>
+                <Style TargetType="DataGridColumnHeader">
+                    <Setter Property="FontWeight" Value="Bold" />
+                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                </Style>
+            </DataGrid.Resources>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
-                <DataGridTextColumn Header="Manufacturer" Binding="{Binding Manufacturer}" />
-                <DataGridTextColumn Header="Description" Binding="{Binding Description}" />
-                <DataGridTextColumn Header="Service" Binding="{Binding Service}" />
-                <DataGridTextColumn Header="Caption" Binding="{Binding Caption}" />
-                <DataGridTextColumn Header="PNPDeviceID" Binding="{Binding PNPDeviceID}" />
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*" />
+                <DataGridTextColumn Header="Manufacturer" Binding="{Binding Manufacturer}" Width="*" />
+                <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="*" />
+                <DataGridTextColumn Header="Service" Binding="{Binding Service}" Width="80" />
+                <DataGridTextColumn Header="Caption" Binding="{Binding Caption}" Width="*" />
+                <DataGridTextColumn Header="PNPDeviceID" Binding="{Binding PNPDeviceID}" Width="*" />
                 <!-- Add more columns here -->
-                <DataGridTemplateColumn Header="Actions">
+                <DataGridTemplateColumn Header="Action" Width="60">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <Button Content="Edit" Margin="2" Click="EditButton_Click" />
-                                <Button Content="Delete" Margin="2" Click="DeleteButton_Click" />
-                            </StackPanel>
+                            <Button Click="DeleteButton_Click" Width="24" Height="24" Background="Transparent" BorderBrush="Transparent">
+                                <materialDesign:PackIcon Kind="Delete" Foreground="#FFD50000" />
+                            </Button>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-
     </Grid>
 </Page>
-

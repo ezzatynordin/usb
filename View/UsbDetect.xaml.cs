@@ -60,7 +60,8 @@ namespace usb.View
 
                 dbContext.SaveChanges();
                 // Add the USB device to the collection
-                
+
+                MessageBox.Show("The USB details have been successfully added to the USB list.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
     }

@@ -49,8 +49,29 @@ namespace usb.View
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
-            // Handle delete button click logic here
+            if (ProductGrid.SelectedItem is UsbDevice selectedDevice)
+            {
+                MessageBoxResult result = MessageBox.Show("Are you sure you want to delete this USB device?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    // Delete the selected device from the database
+                    using (var dbContext = new UsbDbContext())
+                    {
+                        var deviceToDelete = dbContext.UsbDevices.Find(selectedDevice.Id);
+                        if (deviceToDelete != null)
+                        {
+                            dbContext.UsbDevices.Remove(deviceToDelete);
+                            dbContext.SaveChanges();
+                        }
+                    }
+
+                    // Remove the selected device from the collection
+                    UsbDevices.Remove(selectedDevice);
+                }
+            }
         }
+
 
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
@@ -67,17 +88,6 @@ namespace usb.View
                     d.PNPDeviceID.Contains(searchTerm)
                 ).ToList()
             );
-        }
-
-private void ProductGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            // Get the selected item from the data grid
-            UsbDevice selectedDevice = ProductGrid.SelectedItem as UsbDevice;
-            if (selectedDevice != null)
-            {
-                // Perform any necessary logic with the selected item
-                MessageBox.Show($"Selected device: {selectedDevice.Name}");
-            }
         }
     }
 }

@@ -91,6 +91,20 @@ namespace usb.View
             WindowState = WindowState.Minimized;
         }
 
+        private void MaximizeRestoreButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (WindowState == WindowState.Normal)
+            {
+                WindowState = WindowState.Maximized;
+                MaximizeRestoreButton.Content = "◻";
+            }
+            else
+            {
+                WindowState = WindowState.Normal;
+                MaximizeRestoreButton.Content = "□";
+            }
+        }
+
         private void ContentFrame_Navigated(object sender, NavigationEventArgs e)
         {
 
