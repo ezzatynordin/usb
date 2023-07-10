@@ -22,6 +22,7 @@ namespace usb.View
         public LoginView()
         {
             InitializeComponent();
+
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)

@@ -38,9 +38,20 @@ namespace usb.View
         {
             using (var dbContext = new UsbDbContext())
             {
-                UsbDevices = new ObservableCollection<UsbDevice>(dbContext.UsbDevices.ToList());
+                var devices = dbContext.UsbDevices.ToList();
+
+                // Add numbering to the devices
+                for (int i = 0; i < devices.Count; i++)
+                {
+                    devices[i].ListNo = i + 1;
+                }
+
+                UsbDevices = new ObservableCollection<UsbDevice>(devices);
             }
         }
+
+
+
 
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
@@ -68,6 +79,8 @@ namespace usb.View
 
                     // Remove the selected device from the collection
                     UsbDevices.Remove(selectedDevice);
+
+
                 }
             }
         }
@@ -80,14 +93,16 @@ namespace usb.View
             // Filter the USB devices based on the search term
             UsbDevices = new ObservableCollection<UsbDevice>(
                 UsbDevices.Where(d =>
-                    d.Name.Contains(searchTerm) ||
-                    d.Manufacturer.Contains(searchTerm) ||
-                    d.Description.Contains(searchTerm) ||
-                    d.Service.Contains(searchTerm) ||
-                    d.Caption.Contains(searchTerm) ||
-                    d.PNPDeviceID.Contains(searchTerm)
+                d.DeviceID.Contains(searchTerm) ||
+                d.Name.Contains(searchTerm) ||
+                d.Manufacturer.Contains(searchTerm)
                 ).ToList()
             );
+        }
+
+        private void ProductGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

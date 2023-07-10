@@ -47,12 +47,11 @@ namespace usb.View
                 {
                     var usbDevice = new UsbDevice
                     {
+
+                        Date = DateTime.Now.Date,
+                        DeviceID = obj["DeviceID"]?.ToString(),
                         Name = obj["Name"]?.ToString(),
-                        Manufacturer = obj["Manufacturer"]?.ToString(),
-                        Description = obj["Description"]?.ToString(),
-                        Service = obj["Service"]?.ToString(),
-                        Caption = obj["Caption"]?.ToString(),
-                        PNPDeviceID = obj["PNPDeviceID"]?.ToString()
+                        Manufacturer = obj["Manufacturer"]?.ToString()                       
                     };
 
                     dbContext.UsbDevices.Add(usbDevice);

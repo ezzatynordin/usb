@@ -20,7 +20,7 @@
         <DataGrid Grid.Row="2" x:Name="ProductGrid" AutoGenerateColumns="False" CanUserAddRows="False" Margin="22,10,23,24"
                   ItemsSource="{Binding UsbDevices}"
                   BorderBrush="#CCCCCC" BorderThickness="1" Background="White" AlternatingRowBackground="#F5F5F5"
-                  RowHeaderWidth="0" HorizontalGridLinesBrush="#CCCCCC" VerticalGridLinesBrush="#CCCCCC">
+                  RowHeaderWidth="0" HorizontalGridLinesBrush="#CCCCCC" VerticalGridLinesBrush="#CCCCCC" SelectionChanged="ProductGrid_SelectionChanged">
             <DataGrid.Resources>
                 <Style TargetType="DataGridColumnHeader">
                     <Setter Property="FontWeight" Value="Bold" />
@@ -28,14 +28,51 @@
                 </Style>
             </DataGrid.Resources>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*" />
-                <DataGridTextColumn Header="Manufacturer" Binding="{Binding Manufacturer}" Width="*" />
-                <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="*" />
-                <DataGridTextColumn Header="Service" Binding="{Binding Service}" Width="80" />
-                <DataGridTextColumn Header="Caption" Binding="{Binding Caption}" Width="*" />
-                <DataGridTextColumn Header="PNPDeviceID" Binding="{Binding PNPDeviceID}" Width="*" />
+
+                <DataGridTextColumn Header="No" Binding="{Binding ListNo}" Width="*">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="HorizontalAlignment" Value="Center" />
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+
+                <DataGridTextColumn Header="Date" Binding="{Binding Date, StringFormat='yyyy-MM-dd'}" Width="*">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="HorizontalAlignment" Value="Center" />
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+
+                <DataGridTextColumn Header="DeviceID" Binding="{Binding DeviceID}" Width="300">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="HorizontalAlignment" Value="Center" />
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="170">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="HorizontalAlignment" Value="Center" />
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+
+                <DataGridTextColumn Header="Manufacturer" Binding="{Binding Manufacturer}" Width="200">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="HorizontalAlignment" Value="Center" />
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+
+
+
                 <!-- Add more columns here -->
-                <DataGridTemplateColumn Header="Action" Width="60">
+                <DataGridTemplateColumn Header="Action" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button Click="DeleteButton_Click" Width="24" Height="24" Background="Transparent" BorderBrush="Transparent">

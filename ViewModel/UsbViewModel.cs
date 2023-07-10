@@ -43,13 +43,11 @@ namespace usb.ViewModel
                     UsbDevices.Add(new UsbDevice
                     {
                         Id = Convert.ToInt32(device.GetPropertyValue("Id")),
+                        Date = DateTime.Now.Date,
+                        DeviceID = device.GetPropertyValue("DeviceID").ToString(),
                         Name = device.GetPropertyValue("Name").ToString(),
-                        Manufacturer = device.GetPropertyValue("Manufacturer").ToString(),
-                        Description = device.GetPropertyValue("Description").ToString(),
-                        Service = device.GetPropertyValue("Service").ToString(),
-                        Caption = device.GetPropertyValue("Caption").ToString(),
-                        PNPDeviceID = device.GetPropertyValue("PNPDeviceID").ToString()
-                    });
+                        Manufacturer = device.GetPropertyValue("Manufacturer").ToString()
+                    }) ;
                 }
             }
         }
