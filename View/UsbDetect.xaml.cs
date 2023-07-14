@@ -51,7 +51,7 @@ namespace usb.View
                         Date = DateTime.Now.Date,
                         DeviceID = obj["DeviceID"]?.ToString(),
                         Name = obj["Name"]?.ToString(),
-                        Manufacturer = obj["Manufacturer"]?.ToString()                       
+                        Manufacturer = obj["Manufacturer"]?.ToString()
                     };
 
                     dbContext.UsbDevices.Add(usbDevice);
@@ -64,64 +64,64 @@ namespace usb.View
             }
         }
     }
-        }
+}
 
 
-        // Rest of the code remains the same...
+// Rest of the code remains the same...
 
 
 
-        public class DeviceViewModel : INotifyPropertyChanged
+public class DeviceViewModel : INotifyPropertyChanged
+{
+    private ObservableCollection<DeviceProperty> deviceList;
+
+    public ObservableCollection<DeviceProperty> DeviceList
+    {
+        get { return deviceList; }
+        set
         {
-            private ObservableCollection<DeviceProperty> deviceList;
+            deviceList = value;
+            OnPropertyChanged(nameof(DeviceList));
+        }
+    }
 
-            public ObservableCollection<DeviceProperty> DeviceList
+    public void LoadDevices()
+    {
+        List<DeviceProperty> properties = GetConnectedPendriveProperties();
+        DeviceList = new ObservableCollection<DeviceProperty>(properties);
+    }
+
+    private List<DeviceProperty> GetConnectedPendriveProperties()
+    {
+        List<DeviceProperty> properties = new List<DeviceProperty>();
+
+        try
+        {
+            ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT * FROM Win32_PnPEntity WHERE Status='OK' AND Caption='USB Mass Storage Device'");
+
+            foreach (ManagementObject obj in searcher.Get())
             {
-                get { return deviceList; }
-                set
+                foreach (PropertyData property in obj.Properties)
                 {
-                    deviceList = value;
-                    OnPropertyChanged(nameof(DeviceList));
+                    properties.Add(new DeviceProperty(property.Name, property.Value?.ToString()));
                 }
-            }
-
-            public void LoadDevices()
-            {
-                List<DeviceProperty> properties = GetConnectedPendriveProperties();
-                DeviceList = new ObservableCollection<DeviceProperty>(properties);
-            }
-
-            private List<DeviceProperty> GetConnectedPendriveProperties()
-            {
-                List<DeviceProperty> properties = new List<DeviceProperty>();
-
-                try
-                {
-                    ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT * FROM Win32_PnPEntity WHERE Status='OK' AND Caption='USB Mass Storage Device'");
-
-                    foreach (ManagementObject obj in searcher.Get())
-                    {
-                        foreach (PropertyData property in obj.Properties)
-                        {
-                            properties.Add(new DeviceProperty(property.Name, property.Value?.ToString()));
-                        }
-                    }
-                }
-                catch (ManagementException e)
-                {
-                    MessageBox.Show($"An error occurred while querying devices: {e.Message}");
-                }
-
-                return properties;
-            }
-
-            public event PropertyChangedEventHandler PropertyChanged;
-
-            protected virtual void OnPropertyChanged(string propertyName)
-            {
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
             }
         }
+        catch (ManagementException e)
+        {
+            MessageBox.Show($"An error occurred while querying devices: {e.Message}");
+        }
+
+        return properties;
+    }
+
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    protected virtual void OnPropertyChanged(string propertyName)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+}
 
 public class DeviceProperty
 {
